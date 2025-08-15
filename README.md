@@ -1,21 +1,121 @@
-```txt
-npm install
-npm run dev
-```
+# ラップトップストア - E-Commerce Platform
 
-```txt
+## プロジェクト概要
+- **名前**: ラップトップストア
+- **目的**: Amazonのような本格的なEコマースサイト（ノートパソコン専門店）
+- **主な機能**: 
+  - 商品一覧表示（グリッドレイアウト）
+  - 多様なフィルター機能（カテゴリー、ブランド、価格帯）
+  - 商品検索機能
+  - ソート機能（おすすめ、価格、評価、新着順）
+  - ショッピングカート機能
+  - 商品詳細モーダル
+  - 注文処理システム
+
+## アクセスURL
+- **開発環境**: https://3000-ib3cllno6h3rxxlyn4xal-6532622b.e2b.dev
+- **本番環境**: 未デプロイ
+
+## 現在実装済みの機能
+
+### 商品管理
+- ✅ 12種類のノートパソコンをダミーデータとして登録
+- ✅ 商品画像、価格、スペック、レビュー評価の表示
+- ✅ セール価格とディスカウント率の表示
+- ✅ 在庫管理システム
+
+### フィルター機能  
+- ✅ カテゴリー別フィルター（ゲーミング、ビジネス、クリエイター向け、学生向け）
+- ✅ ブランド別フィルター（Apple、Dell、HP、Lenovo、ASUS、Microsoft、Acer、MSI）
+- ✅ 価格帯フィルター（最低価格・最高価格の設定）
+- ✅ フリーワード検索
+
+### ソート機能
+- ✅ おすすめ順
+- ✅ 価格が安い順/高い順
+- ✅ 評価が高い順
+- ✅ 新着順
+
+### ショッピングカート
+- ✅ 商品追加/削除
+- ✅ 数量変更
+- ✅ カート内合計金額の自動計算
+- ✅ セッションベースのカート管理
+
+### 注文処理
+- ✅ 簡易チェックアウト機能
+- ✅ 注文番号の自動生成
+- ✅ 在庫の自動更新
+
+## データアーキテクチャ
+
+### 使用技術
+- **フレームワーク**: Hono + Cloudflare Pages
+- **データベース**: Cloudflare D1 (SQLite)
+- **フロントエンド**: Vanilla JavaScript + Tailwind CSS
+- **アイコン**: Font Awesome
+
+### データベーステーブル
+1. **products**: 商品情報（名前、価格、スペック、画像、在庫数）
+2. **categories**: カテゴリー管理
+3. **brands**: ブランド管理
+4. **cart_items**: カートアイテム（セッションベース）
+5. **orders**: 注文情報
+6. **order_items**: 注文明細
+
+### API エンドポイント
+- `GET /api/products` - 商品一覧（フィルター対応）
+- `GET /api/products/:slug` - 商品詳細
+- `GET /api/categories` - カテゴリー一覧
+- `GET /api/brands` - ブランド一覧
+- `GET /api/cart/:sessionId` - カート内容取得
+- `POST /api/cart/:sessionId/add` - カートに追加
+- `PUT /api/cart/:sessionId/update` - カート更新
+- `DELETE /api/cart/:sessionId/item/:productId` - カートから削除
+- `POST /api/orders` - 注文作成
+
+## 使い方
+
+### 商品の閲覧
+1. トップページで全商品が表示されます
+2. 左サイドバーでフィルターを設定できます
+3. 上部の検索バーでキーワード検索が可能です
+4. ソート機能で並び替えができます
+
+### 商品の購入
+1. 「カートに追加」ボタンで商品をカートに入れます
+2. 右上のカートアイコンでカート内容を確認できます
+3. カート内で数量変更や削除が可能です
+4. 「レジに進む」で簡易的な注文処理ができます
+
+## 今後の実装予定機能
+- [ ] ユーザー認証システム
+- [ ] 決済システムの統合
+- [ ] 商品レビュー機能
+- [ ] お気に入り機能
+- [ ] 注文履歴管理
+- [ ] 管理画面
+- [ ] メール通知機能
+- [ ] 商品レコメンデーション
+
+## 開発コマンド
+
+```bash
+# 開発サーバー起動
+npm run dev:sandbox
+
+# データベースリセット＆初期化
+npm run db:reset
+
+# ビルド
+npm run build
+
+# デプロイ（Cloudflare Pages）
 npm run deploy
 ```
 
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
-
-```txt
-npm run cf-typegen
-```
-
-Pass the `CloudflareBindings` as generics when instantiation `Hono`:
-
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>()
-```
+## デプロイ状況
+- **プラットフォーム**: Cloudflare Pages（未デプロイ）
+- **ステータス**: ✅ ローカル開発環境で稼働中
+- **技術スタック**: Hono + TypeScript + Cloudflare D1 + Tailwind CSS
+- **最終更新**: 2025年8月15日
